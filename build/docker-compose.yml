@@ -1,0 +1,25 @@
+services:
+  tauri-arm64:
+    build:
+      context: ../../../../Desktop/ness
+      dockerfile: Dockerfile
+    image: ness-arm64
+    platform: linux/arm64
+    volumes:
+      # 挂载项目根目录（分阶段构建时主机构建前端后挂载覆盖）
+      - ..:/app
+      # 挂载输出目录
+      - ./dist:/output
+    environment:
+      - NODE_OPTIONS=--max-old-space-size=8192
+    working_dir: /app
+    # 默认命令：Rust 打包（需先主机构建前端，并存在 tauri.linux.conf.json 跳过 beforeBuildCommand）
+    command: >
+      sh -c '
+        . /root/.cargo/env 2>/dev/null || . $HOME/.cargo/env
+        cargo tauri build --bundles deb,appimage || cargo tauri build --bundles deb
+        cp -r target/release/bundle/deb/*.deb /output/ 2>/dev/null || true
+        cp -r target/release/bundle/appimage/*.AppImage /output/ 2>/dev/null || true
+      '
+    profiles:
+      - build
