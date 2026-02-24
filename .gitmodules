@@ -2,4 +2,4 @@
 
 [submodule "frontend"]
 	path = frontend
-	url = git@github.com:luodexun/testb.git
+	url = https://github.com/luodexun/testb.git
