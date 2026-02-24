@@ -13,10 +13,20 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
-                sh '''
-                  set -e
-                  git submodule update --init
-                '''
+                withCredentials([usernamePassword(
+                    credentialsId: 'luodexun'
+                )]) {
+                    sh '''
+                      set -e
+
+                      # 为需要鉴权的域配置 http extra header，供 submodule 使用
+                      AUTH="$(printf '%s:%s' "$GIT_USERNAME" "$GIT_PASSWORD" | base64 | tr -d '\\n')"
+                      git config http.https://github.com/.extraheader "AUTHORIZATION: basic $AUTH"
+
+                      git submodule sync --recursive || true
+                      git submodule update --init --recursive
+                    '''
+                }
             }
         }
 
