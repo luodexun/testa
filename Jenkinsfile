@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         NODE_ENV = 'production'
+        GIT_ASKPASS = credentials('github-token')
     }
 
     tools {
