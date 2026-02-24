@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         NODE_ENV = 'production'
-        GIT_ASKPASS = credentials('github-token')
     }
 
     tools {
@@ -14,10 +13,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
-                sh '''
-                  set -e
-                  git submodule update --init
-                '''
             }
         }
 
@@ -36,7 +31,7 @@ pipeline {
                     npm install -g pnpm
                   fi
 
-                  pnpm install
+                  pnpm install --frozen-lockfile || pnpm install
                 '''
             }
         }
