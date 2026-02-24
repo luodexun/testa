@@ -13,26 +13,11 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-               checkout([
-                                  $class: 'GitSCM',
-                                  branches: [[name: '*/main']],
-                                  doGenerateSubmoduleConfigurations: false,
-                                  extensions: [
-                                      [$class: 'SubmoduleOption',
-                                       disableSubmodules: false,
-                                       parentCredentials: true,      // 关键：允许子模块使用主仓库凭据
-                                       recursiveSubmodules: true,    // 递归拉取子模块
-                                       reference: '',
-                                       trackingSubmodules: false,
-                                       shallow: false,
-                                       depth: 0,
-                                       timeout: 10]
-                                  ],
-                                  userRemoteConfigs: [[
-                                      url: scm.userRemoteConfigs[0].url,  // 使用 SCM 配置的 URL
-                                      credentialsId: 'github-token'       // 明确指定凭据
-                                  ]]
-                              ])
+                checkout scm
+                sh '''
+                  set -e
+                  git submodule update --init
+                '''
             }
         }
 
