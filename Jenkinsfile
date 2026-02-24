@@ -12,23 +12,22 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
-                withCredentials([usernamePassword(
-                    credentialsId: 'luodexun', // 请在 Jenkins 中创建这个 ID 或改成你自己的
-                    usernameVariable: 'GIT_USERNAME',
-                    passwordVariable: 'GIT_PASSWORD'
-                )]) {
-                    sh '''
-                      set -e
-
-                      # 为需要鉴权的域配置 http extra header，供 submodule 使用
-                      AUTH="$(printf '%s:%s' "$GIT_USERNAME" "$GIT_PASSWORD" | base64 | tr -d '\\n')"
-                      git config http.https://github.com/.extraheader "AUTHORIZATION: basic $AUTH"
-
-                      git submodule sync --recursive || true
-                      git submodule update --init --recursive
-                    '''
-                }
+               checkout([
+                                   $class: 'GitSCM',
+                                   branches: [[name: '*/main']],
+                                   extensions: [
+                                       [$class: 'SubmoduleOption',
+                                        parentCredentials: true,
+                                        recursiveSubmodules: true,
+                                        reference: '',
+                                        trackingSubmodules: false,
+                                        disableSubmodules: false,
+                                        timeout: 10,
+                                        shallow: false,
+                                        depth: 0]
+                                   ],
+                                   userRemoteConfigs: [[url: 'https://github.com/luodexun/testa.git']]
+                               ])
             }
         }
 
