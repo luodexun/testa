@@ -12,22 +12,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-               checkout([
-                                   $class: 'GitSCM',
-                                   branches: [[name: '*/main']],
-                                   extensions: [
-                                       [$class: 'SubmoduleOption',
-                                        parentCredentials: true,
-                                        recursiveSubmodules: true,
-                                        reference: '',
-                                        trackingSubmodules: false,
-                                        disableSubmodules: false,
-                                        timeout: 10,
-                                        shallow: false,
-                                        depth: 0]
-                                   ],
-                                   userRemoteConfigs: [[url: 'https://github.com/luodexun/testa.git']]
-                               ])
+                checkout scm
             }
         }
 
