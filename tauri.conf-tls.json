@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schema.tauri.app/config/1",
+  "build": {
+    "beforeBuildCommand": "pnpm build:tauri",
+    "beforeDevCommand": "pnpm dev",
+    "devPath": "http://localhost:3003",
+    "distDir": "../dist/renderer"
+  },
+  "package": {
+    "productName": "新能源区域集控系统",
+    "version": "2.1.0"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": false,
+      "shell": {
+        "all": false,
+        "open": true
+      },
+       "http": {
+        "scope": ["https://ness.crnewenergy.com.cn"]
+      }
+    },
+    "windows": [
+      {
+        "height": 800,
+        "resizable": true,
+        "title": "华润新能源控股有限公司-新能源区域集控系统",
+        "width": 1400
+      }
+    ],
+    "security": {
+      "csp": null
+    },
+    "bundle": {
+      "active": true,
+      "targets": ["nsis", "deb", "appimage", "rpm"],
+      "identifier": "com.regioncontrol.ness",
+      "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"],
+      "resources": ["ca.pem", "client-cert.pem", "client-key.key"]
+    }
+  }
+}
