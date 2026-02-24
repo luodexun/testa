@@ -31,7 +31,7 @@ pipeline {
                     npm install -g pnpm
                   fi
 
-                  pnpm install --frozen-lockfile || pnpm install
+                  pnpm install
                 '''
             }
         }
