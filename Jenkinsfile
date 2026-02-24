@@ -5,6 +5,10 @@ pipeline {
         NODE_ENV = 'production'
     }
 
+    tools {
+            nodejs "18.14.2"  // 需要在 Jenkins 中配置 Node.js
+        }
+
     stages {
         stage('Checkout') {
             steps {
