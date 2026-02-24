@@ -20,8 +20,7 @@ pipeline {
                       set -e
 
                       # 为需要鉴权的域配置 http extra header，供 submodule 使用
-                      git submodule sync --recursive || true
-                      git submodule update --init --recursive
+                      git submodule update --init
                     '''
                 }
             }
