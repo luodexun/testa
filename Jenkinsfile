@@ -15,10 +15,7 @@ pipeline {
                 checkout scm
                 sh '''
                   set -e
-
-                  # 同步并初始化所有子模块（包含 frontend）
-                  git submodule sync --recursive || true
-                  git submodule update --init --recursive
+                  git submodule update --init
                 '''
             }
         }
