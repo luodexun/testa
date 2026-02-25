@@ -13,6 +13,41 @@ pipeline {
         OUTPUT_DIR = "/Users/luodexun/Documents/deb"
     }
 
+     // 定义构建参数
+        parameters {
+            // 1. 分支选择
+            string(name: 'BRANCH', defaultValue: 'main', description: '要构建的分支名称')
+
+            // 2. 或者使用 Git 参数（需要安装 Git Parameter 插件）
+            // gitParameter(
+            //     name: 'BRANCH',
+            //     description: '选择要构建的分支',
+            //     type: 'PT_BRANCH',
+            //     defaultValue: 'origin/main',
+            //     useRepository: 'https://github.com/luodexun/testa.git'
+            // )
+
+            // 3. 其他常见参数
+            choice(
+                name: 'ENVIRONMENT',
+                choices: ['dev', 'test', 'staging', 'prod'],
+                description: '选择部署环境'
+            )
+
+            booleanParam(
+                name: 'SKIP_TESTS',
+                defaultValue: false,
+                description: '是否跳过测试'
+            )
+
+            text(
+                name: 'BUILD_NOTES',
+                defaultValue: '',
+                description: '构建备注',
+                trim: true
+            )
+     }
+
     stages {
         stage('Checkout') {
             steps {
