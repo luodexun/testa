@@ -92,7 +92,7 @@ pipeline {
 
     post {
         always {
-            // cleanWs()  // 清理工作空间
+            cleanWs()  // 清理工作空间
              script {
                 echo "🧹 清理 Docker 资源..."
                 // 清理本次构建创建的镜像
