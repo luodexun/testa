@@ -10,7 +10,7 @@ pipeline {
         // 定义变量
         IMAGE_NAME = "ness-arm64-${env.BUILD_ID}"  // 每次构建使用不同的镜像名
         PROJECT_ROOT = "${WORKSPACE}"
-        OUTPUT_DIR = "${WORKSPACE}/build/dist"
+        OUTPUT_DIR = "/Users/luodexun/Documents/deb"
     }
 
     stages {
