@@ -10,7 +10,6 @@ pipeline {
         // 定义变量
         IMAGE_NAME = "ness-arm64-${env.BUILD_ID}"  // 每次构建使用不同的镜像名
         PROJECT_ROOT = "${WORKSPACE}"
-        OUTPUT_DIR = "/Users/luodexun/Documents/deb"
     }
 
      // 定义构建参数
@@ -18,34 +17,7 @@ pipeline {
             // 1. 分支选择
             string(name: 'BRANCH', defaultValue: 'main', description: '要构建的分支名称')
 
-            // 2. 或者使用 Git 参数（需要安装 Git Parameter 插件）
-            // gitParameter(
-            //     name: 'BRANCH',
-            //     description: '选择要构建的分支',
-            //     type: 'PT_BRANCH',
-            //     defaultValue: 'origin/main',
-            //     useRepository: 'https://github.com/luodexun/testa.git'
-            // )
-
-            // 3. 其他常见参数
-            choice(
-                name: 'ENVIRONMENT',
-                choices: ['dev', 'test', 'staging', 'prod'],
-                description: '选择部署环境'
-            )
-
-            booleanParam(
-                name: 'SKIP_TESTS',
-                defaultValue: false,
-                description: '是否跳过测试'
-            )
-
-            text(
-                name: 'BUILD_NOTES',
-                defaultValue: '',
-                description: '构建备注',
-                trim: true
-            )
+            text(name: 'OUTPUT_DIR', defaultValue: '/Users/luodexun/Documents/deb',description: '构建输出地址',trim: true)
      }
 
     stages {
@@ -54,7 +26,7 @@ pipeline {
                 // 使用 Git 插件拉取主仓库
                 checkout([
                     $class: 'GitSCM',
-                    branches: [[name: '*/main']],  // 替换为你的分支
+                    branches: [[name: '*/${params.BRANCH}']],  // 替换为你的分支
                     extensions: [
                         [
                             $class: 'SubmoduleOption',
