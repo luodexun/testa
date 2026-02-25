@@ -35,6 +35,7 @@ pipeline {
                         [$class: 'CleanBeforeCheckout']
                     ],
                     userRemoteConfigs: [[
+                        url: 'https://github.com/luodexun/testa.git',  // 替换为你的仓库地址
                         credentialsId: 'github-token'  // 替换为你的凭据ID
                     ]]
                 ])
