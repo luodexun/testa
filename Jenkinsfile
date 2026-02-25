@@ -35,42 +35,12 @@ pipeline {
                         [$class: 'CleanBeforeCheckout']
                     ],
                     userRemoteConfigs: [[
-                        url: 'https://github.com/luodexun/testa.git',  // 替换为你的仓库地址
+//                         url: 'https://github.com/luodexun/testa.git',  // 替换为你的仓库地址
                         credentialsId: 'github-token'  // 替换为你的凭据ID
                     ]]
                 ])
             }
         }
-
-//          stage('Install dependencies') {
-//             steps {
-//                 sh '''
-//                   set -e
-//
-//                   cd frontend
-//
-//                   if command -v corepack >/dev/null 2>&1; then
-//                     corepack enable || true
-//                   fi
-//
-//                   if ! command -v pnpm >/dev/null 2>&1; then
-//                     npm install -g pnpm
-//                   fi
-//
-//                   pnpm install --frozen-lockfile || pnpm install
-//                 '''
-//             }
-//         }
-//
-//          stage('Build') {
-//             steps {
-//                 sh '''
-//                   set -e
-//                   cd frontend
-//                   pnpm run build
-//                 '''
-//             }
-//         }
 
         stage('准备环境') {
             steps {
