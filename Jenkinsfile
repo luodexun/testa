@@ -42,35 +42,35 @@ pipeline {
             }
         }
 
-         stage('Install dependencies') {
-            steps {
-                sh '''
-                  set -e
-
-                  cd frontend
-
-                  if command -v corepack >/dev/null 2>&1; then
-                    corepack enable || true
-                  fi
-
-                  if ! command -v pnpm >/dev/null 2>&1; then
-                    npm install -g pnpm
-                  fi
-
-                  pnpm install --frozen-lockfile || pnpm install
-                '''
-            }
-        }
-
-         stage('Build') {
-            steps {
-                sh '''
-                  set -e
-                  cd frontend
-                  pnpm run build
-                '''
-            }
-        }
+//          stage('Install dependencies') {
+//             steps {
+//                 sh '''
+//                   set -e
+//
+//                   cd frontend
+//
+//                   if command -v corepack >/dev/null 2>&1; then
+//                     corepack enable || true
+//                   fi
+//
+//                   if ! command -v pnpm >/dev/null 2>&1; then
+//                     npm install -g pnpm
+//                   fi
+//
+//                   pnpm install --frozen-lockfile || pnpm install
+//                 '''
+//             }
+//         }
+//
+//          stage('Build') {
+//             steps {
+//                 sh '''
+//                   set -e
+//                   cd frontend
+//                   pnpm run build
+//                 '''
+//             }
+//         }
 
         stage('准备环境') {
             steps {
