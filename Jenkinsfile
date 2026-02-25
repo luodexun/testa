@@ -26,7 +26,7 @@ pipeline {
                 // 使用 Git 插件拉取主仓库
                 checkout([
                     $class: 'GitSCM',
-                    branches: [[name: "*/${params.BRANCH}"]]],  // 替换为你的分支
+                    branches: [[name: "*/${params.BRANCH}"]],  // 替换为你的分支
                     extensions: [
                         [
                             $class: 'SubmoduleOption',
