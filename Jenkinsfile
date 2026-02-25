@@ -3,6 +3,7 @@ pipeline {
 
     tools {
             nodejs "18.14.2"  // 需要在 Jenkins 中配置 Node.js
+            dockerTool 'local-docker'
         }
 
     environment {
